@@ -203,22 +203,23 @@
       linear-gradient(180deg, var(--navy) 0%, #0d1f3c 100%);
   }
 
-  /* Ilustracion decorativa del pendulo Charpy (SVG animado en el fondo del hero) */
+  /* Ilustracion decorativa del pendulo Charpy centrada en el hero para todos los dispositivos */
   .pendulum-deco {
     position: absolute;
-    right: -40px;
+    left: 50%;
     top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.06;
-    width: 420px;
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0.05;
+    width: min(420px, 80vw);
     animation: pendulum-swing 4s ease-in-out infinite;
     transform-origin: top center;
+    pointer-events: none;
   }
 
-  /* Animacion de vaiven del pendulo decorativo */
+  /* Animacion de vaiven del pendulo decorativo centrado */
   @keyframes pendulum-swing {
-    0%, 100% { transform: translateY(-50%) rotate(-15deg); }
-    50%       { transform: translateY(-50%) rotate(15deg); }
+    0%, 100% { transform: translate(-50%, -50%) rotate(-15deg); }
+    50%       { transform: translate(-50%, -50%) rotate(15deg); }
   }
 
   /* Contenedor central del contenido del hero */
@@ -390,9 +391,12 @@
      SECCION "EL ENSAYO" (#about)
      Incluye texto explicativo y tarjetas informativas.
   ========================================================= */
-  #about {
-    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
-  }
+  /* Secciones con colores alternados para diferenciarlas visualmente */
+  #about   { background: var(--navy); }
+  #team    { background: var(--navy-mid); }
+  #logbook { background: var(--navy); }
+  #video   { background: var(--navy-mid); }
+  #results { background: var(--navy); }
 
   /* Grilla de dos columnas: texto a la izquierda, tarjetas a la derecha */
   .about-grid {
@@ -483,8 +487,6 @@
      SECCION EQUIPO (#team)
      Presenta a los integrantes del proyecto con tarjetas individuales.
   ========================================================= */
-  #team { background: var(--navy-mid); }
-
   /* Bloque de texto introductorio del equipo */
   .team-intro { max-width: 700px; margin-bottom: 4rem; }
 
@@ -513,7 +515,7 @@
     box-shadow: 0 16px 40px rgba(0,0,0,0.3);
   }
 
-  /* Avatar circular con iniciales del integrante */
+  /* Avatar circular con iniciales de cd integrante */
   .team-avatar {
     width: 72px;
     height: 72px;
@@ -574,8 +576,6 @@
      <img src="ruta/imagen.jpg" alt="descripcion"
           style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
   ========================================================= */
-  #logbook { background: var(--navy); }
-
   .logbook-header {
     display: flex;
     justify-content: space-between;
@@ -614,7 +614,7 @@
     height: 10px;
     border-radius: 50%;
     background: var(--gold);
-    border: 2px solid var(--navy);
+    border: 2px solid var(--navy); /* Coincide con el fondo de #logbook */
     box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
   }
 
@@ -699,8 +699,6 @@
          <source src="video/charpy-3d.mp4" type="video/mp4">
        </video>
   ========================================================= */
-  #video { background: var(--navy-mid); }
-
   .video-container { margin-top: 3rem; position: relative; }
 
   /* Placeholder animado que ocupa el espacio del video mientras no este disponible */
@@ -770,8 +768,6 @@
      <img src="ruta/grafica.png" alt="Resultado" style="width:100%;border-radius:4px;">
      <p>Nombre de la grafica</p>
   ========================================================= */
-  #results { background: var(--navy); }
-
   /* Grilla responsiva de tarjetas de resultados */
   .results-grid {
     display: grid;
@@ -869,39 +865,88 @@
   /* JavaScript agrega esta clase cuando el elemento es visible en pantalla */
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-  /* Indicador de scroll en la parte inferior del hero */
-  .scroll-dot {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
+  /* Indicador de scroll ELIMINADO por solicitud del usuario */
+
+  /* =========================================================
+     LIGHTBOX - ZOOM DE IMAGENES AL HACER CLIC
+     Cuando el usuario hace clic en una imagen de la bitacora,
+     se muestra en pantalla completa con fondo oscuro.
+     Al hacer clic fuera o en la X se cierra.
+  ========================================================= */
+
+  /* Fondo oscuro del lightbox (overlay que cubre toda la pantalla) */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9998;
     align-items: center;
-    gap: 0.4rem;
-    z-index: 2;
-    animation: fadeSlideUp 1s 1s ease both;
+    justify-content: center;
+    cursor: zoom-out;
+    animation: lightbox-fade 0.25s ease;
   }
 
-  .scroll-dot span {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
+  /* Estado visible del lightbox (activado por JavaScript) */
+  .lightbox-overlay.open {
+    display: flex;
   }
 
-  /* Linea vertical animada del indicador de scroll */
-  .scroll-line {
-    width: 1px;
+  @keyframes lightbox-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Imagen ampliada dentro del lightbox */
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    animation: lightbox-zoom 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    cursor: default;
+  }
+
+  @keyframes lightbox-zoom {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+
+  /* Boton de cerrar el lightbox (X en esquina superior derecha) */
+  .lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 1.4rem;
+    width: 40px;
     height: 40px;
-    background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
-    animation: scroll-pulse 1.8s ease-in-out infinite;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    line-height: 1;
   }
 
-  @keyframes scroll-pulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-    50%       { opacity: 1;   transform: scaleY(1); }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  /* Las imagenes reales en los slots de la bitacora muestran cursor de zoom */
+  .log-img-slot img {
+    cursor: zoom-in;
+    transition: transform 0.2s;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
   }
+
+  .log-img-slot img:hover { transform: scale(1.03); }
 
   /* =========================================================
      ESTILOS RESPONSIVOS PARA MOVIL Y TABLET
@@ -978,14 +1023,13 @@
   <!-- Fondo con gradientes superpuestos -->
   <div class="hero-bg"></div>
 
-  <!-- Ilustracion decorativa SVG del pendulo Charpy animada en el fondo -->
+  <!-- Ilustracion decorativa SVG del pendulo Charpy centrada y sin texto SPECIMEN -->
   <svg class="pendulum-deco" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg">
     <line x1="150" y1="0"   x2="150" y2="350" stroke="white" stroke-width="3"/>
     <circle cx="150" cy="380" r="40" fill="none" stroke="white" stroke-width="3"/>
     <line x1="50" y1="200" x2="0" y2="500" stroke="white" stroke-width="2" stroke-dasharray="8,4"/>
     <path d="M120 100 L180 100 L200 150 L100 150 Z" fill="none" stroke="white" stroke-width="2"/>
     <rect x="60" y="480" width="180" height="120" rx="4" fill="none" stroke="white" stroke-width="2"/>
-    <text x="150" y="550" font-family="serif" font-size="18" fill="white" text-anchor="middle">SPECIMEN</text>
   </svg>
 
   <!-- Contenido central del hero -->
@@ -1034,11 +1078,7 @@
     </div>
   </div>
 
-  <!-- Indicador visual de scroll en la parte inferior del hero -->
-  <div class="scroll-dot">
-    <div class="scroll-line"></div>
-    <span data-es="Desplazar" data-en="Scroll">Desplazar</span>
-  </div>
+  <!-- fin contenido central del hero -->
 </section>
 
 
@@ -1046,7 +1086,6 @@
      SECCION "EL ENSAYO DE IMPACTO CHARPY" (#about)
      Explica el test con texto y tarjetas informativas.
      Incluye tabs para cambiar entre Espanol e Ingles.
-     NOTA: Se elimino la tarjeta de "Temperatura de transicion"
 ========================================================= -->
 <section id="about">
   <div class="section-inner">
@@ -1060,9 +1099,9 @@
     </h2>
     <div class="divider fade-in"></div>
 
-    <!-- Sistema de pestanas bilingues -->
+    <!-- Contenido bilingue - se muestra segun el idioma activo -->
     <div class="tabs-wrapper fade-in">
-      <div class="tabs-nav">
+      <div class="tabs-nav" style="display:none;">
         <button class="tab-btn active" onclick="switchTab('es-tab', this)"
                 data-es="En Español" data-en="In Spanish">En Español</button>
         <button class="tab-btn"       onclick="switchTab('en-tab', this)"
@@ -1597,6 +1636,17 @@
 
 
 <!-- =========================================================
+     LIGHTBOX - OVERLAY PARA VER IMAGENES EN ZOOM
+     Se activa al hacer clic en cualquier imagen de la bitacora.
+     Se cierra al hacer clic fuera de la imagen o en el boton X.
+========================================================= -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Imagen ampliada">
+</div>
+
+
+<!-- =========================================================
      PIE DE PAGINA (FOOTER)
      Muestra nombre del proyecto, universidad, año y enlaces rapidos.
 ========================================================= -->
@@ -1628,7 +1678,7 @@
 <!-- =========================================================
      JAVASCRIPT
      Toda la logica interactiva de la pagina esta aqui.
-     No requiere librerias externas, es JavaScript puro.
+     No requiere librerias externs
 ========================================================= -->
 <script>
 
@@ -1636,7 +1686,7 @@
   // CAMBIO DE IDIOMA (ES / EN)
   // Busca todos los elementos con atributo data-es o data-en
   // y reemplaza su contenido con el idioma seleccionado.
-  // Los atributos data-es y data-en estan definidos en el HTML.
+  // Tambien sincroniza el contenido de los tabs de la seccion #about.
   // -------------------------------------------------------
   let currentLang = 'es';
 
@@ -1652,13 +1702,17 @@
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       el.innerHTML = el.getAttribute('data-' + lang);
     });
+
+    // Sincroniza automaticamente el tab de la seccion #about con el idioma seleccionado
+    const tabId = lang === 'es' ? 'es-tab' : 'en-tab';
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) targetTab.classList.add('active');
   }
 
   // -------------------------------------------------------
   // SISTEMA DE TABS (pestanas de idioma en la seccion #about)
-  // Muestra el contenido del tab seleccionado y oculta el resto.
-  // id:  id del div .tab-content a mostrar
-  // btn: el boton clickeado, para marcarlo como activo
+  // Muestra el S del tab seleccionado y oculta el resto.
   // -------------------------------------------------------
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -1667,11 +1721,6 @@
     btn.classList.add('active');
   }
 
-  // -------------------------------------------------------
-  // MENU HAMBURGUESA PARA MOVIL
-  // Abre y cierra el menu de navegacion en pantallas pequenas
-  // al hacer clic en el icono de tres lineas.
-  // -------------------------------------------------------
   function toggleMenu() {
     document.getElementById('nav-links').classList.toggle('open');
   }
@@ -1682,6 +1731,41 @@
       document.getElementById('nav-links').classList.remove('open');
     });
   });
+
+  // -------------------------------------------------------
+  // LIGHTBOX - ZOOM DE IMAGENES
+
+  function openLightbox(src, alt) {
+    const overlay = document.getElementById('lightbox');
+    const img     = document.getElementById('lightbox-img');
+    img.src = src;
+    img.alt = alt || 'Imagen ampliada';
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden'; // Evita scroll de fondo mientras el lightbox esta abierto
+  }
+
+  function closeLightbox(event) {
+    // Si se hace clic en la imagen misma, no cierra
+    if (event && event.target.classList.contains('lightbox-img')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = ''; // Restaura el scroll
+  }
+
+  // Cierra el lightbox con la tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Agrega el evento de clic a todas las imagenes reales de la bitacora
+  // Busca imagenes dentro de .log-img-slot que ya tengan src real (no vacias)
+  function initLightbox() {
+    document.querySelectorAll('.log-img-slot img').forEach(img => {
+      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
+  }
+
+  // Ejecuta initLightbox al cargar la pagina
+  document.addEventListener('DOMContentLoaded', initLightbox);
 
   // -------------------------------------------------------
   // ANIMACIONES DE ENTRADA AL HACER SCROLL (fade-in)
