@@ -3,26 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Titulo de la pestaña del navegador -->
   <title>Ensayo de Impacto Charpy — Invenio Mecatrónica</title>
 
-  <!-- Importacion de fuentes desde Google Fonts:
-       - Playfair Display: fuente serif para titulos y encabezados
-       - DM Sans: fuente sans-serif para cuerpo de texto
-       - DM Mono: fuente monoespaciada para etiquetas y codigos -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
-  /* =========================================================
-     VARIABLES GLOBALES DE COLOR Y TIPOGRAFIA
-     Cambia estos valores para modificar el tema de toda la pagina.
-     --navy:        fondo principal oscuro
-     --gold:        color dorado usado en acentos, titulos y detalles
-     --steel-light: azul claro para textos secundarios
-     --text-body:   color del texto de parrafos
-     --text-muted:  color del texto de menor importancia
-  ========================================================= */
   :root {
     --navy:       #0a1628;
     --navy-mid:   #0f2044;
@@ -38,31 +24,17 @@
     --text-muted: #8a9ab0;
   }
 
-  /* Reset basico: elimina margenes y paddings por defecto del navegador */
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-  /* Desplazamiento suave al hacer clic en enlaces de ancla (#seccion) */
-  html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    max-width: 100%;
-  }
-
-  /* Estilos base del cuerpo de la pagina */
   body {
     background: var(--navy);
     color: var(--text-body);
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
     overflow-x: hidden;
-    max-width: 100%;
   }
 
-  /* =========================================================
-     TEXTURA DE RUIDO SUTIL SOBRE TODA LA PAGINA
-     Genera un patron de ruido SVG como overlay fijo para dar
-     profundidad y textura al fondo. No es clickeable (pointer-events: none).
-  ========================================================= */
   body::before {
     content: '';
     position: fixed;
@@ -73,11 +45,6 @@
     opacity: 0.4;
   }
 
-  /* =========================================================
-     BARRA DE NAVEGACION FIJA
-     Permanece en la parte superior al hacer scroll.
-     Se reduce su padding cuando el usuario baja (via JavaScript).
-  ========================================================= */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -87,12 +54,11 @@
     align-items: center;
     padding: 1rem 3rem;
     background: rgba(10, 22, 40, 0.92);
-    backdrop-filter: blur(16px); /* Efecto de vidrio esmerilado */
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(201, 168, 76, 0.15);
     transition: padding 0.3s;
   }
 
-  /* Logo en la barra de navegacion */
   .nav-logo {
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
@@ -101,17 +67,9 @@
     letter-spacing: 0.05em;
   }
 
-  .nav-logo span {
-    color: var(--steel-light);
-    font-weight: 400;
-  }
+  .nav-logo span { color: var(--steel-light); font-weight: 400; }
 
-  /* Lista de enlaces de navegacion */
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
 
   .nav-links a {
     color: var(--steel-light);
@@ -124,7 +82,6 @@
     position: relative;
   }
 
-  /* Linea animada dorada que aparece debajo del enlace al pasar el cursor */
   .nav-links a::after {
     content: '';
     position: absolute;
@@ -137,7 +94,6 @@
   .nav-links a:hover { color: var(--gold); }
   .nav-links a:hover::after { width: 100%; }
 
-  /* Contenedor del toggle de idioma ES / EN */
   .lang-toggle {
     display: flex;
     gap: 0.3rem;
@@ -160,34 +116,11 @@
     transition: all 0.2s;
   }
 
-  /* Boton activo del idioma seleccionado */
-  .lang-btn.active {
-    background: var(--gold);
-    color: var(--navy);
-  }
+  .lang-btn.active { background: var(--gold); color: var(--navy); }
 
-  /* Icono de menu hamburguesa (solo visible en movil) */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); transition: all 0.3s; }
 
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--gold);
-    transition: all 0.3s;
-  }
-
-  /* =========================================================
-     SECCION HERO (PANTALLA DE BIENVENIDA)
-     Ocupa el 100% de la altura de la ventana al cargar la pagina.
-     Contiene el titulo principal, descripcion y estadisticas.
-  ========================================================= */
   #hero {
     min-height: 100vh;
     display: flex;
@@ -198,21 +131,16 @@
     padding: 8rem 2rem 4rem;
   }
 
-  /* Fondo degradado del hero con capas de gradientes radiales y lineales */
   .hero-bg {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
       radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%),
       radial-gradient(ellipse 60% 80% at 80% 100%, rgba(26,53,96,0.6) 0%, transparent 70%),
       linear-gradient(180deg, var(--navy) 0%, #0d1f3c 100%);
   }
 
-  /* Ilustracion decorativa del pendulo Charpy centrada en el hero para todos los dispositivos */
   .pendulum-deco {
-    position: absolute;
-    left: 50%;
-    top: 50%;
+    position: absolute; left: 50%; top: 50%;
     transform: translate(-50%, -50%) rotate(0deg);
     opacity: 0.05;
     width: min(420px, 80vw);
@@ -221,22 +149,13 @@
     pointer-events: none;
   }
 
-  /* Animacion de vaiven del pendulo decorativo centrado */
   @keyframes pendulum-swing {
     0%, 100% { transform: translate(-50%, -50%) rotate(-15deg); }
     50%       { transform: translate(-50%, -50%) rotate(15deg); }
   }
 
-  /* Contenedor central del contenido del hero */
-  .hero-grid {
-    position: relative;
-    z-index: 2;
-    max-width: 960px;
-    width: 100%;
-    text-align: center;
-  }
+  .hero-grid { position: relative; z-index: 2; max-width: 960px; width: 100%; text-align: center; }
 
-  /* Etiqueta superior en el hero (texto pequeno en recuadro dorado) */
   .hero-eyebrow {
     display: inline-block;
     font-family: 'DM Mono', monospace;
@@ -251,10 +170,9 @@
     animation: fadeSlideUp 0.8s ease both;
   }
 
-  /* Titulo principal del hero */
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 7rem); /* Responsive: cambia segun el ancho de pantalla */
+    font-size: clamp(3rem, 8vw, 7rem);
     font-weight: 900;
     line-height: 1;
     color: var(--white);
@@ -264,7 +182,6 @@
 
   .hero-title .accent { color: var(--gold); }
 
-  /* Subtitulo del hero en mayusculas */
   .hero-subtitle-line {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1rem, 2.5vw, 1.6rem);
@@ -276,7 +193,6 @@
     animation: fadeSlideUp 0.8s 0.2s ease both;
   }
 
-  /* Descripcion breve del hero */
   .hero-desc {
     max-width: 640px;
     margin: 0 auto 3rem;
@@ -286,7 +202,6 @@
     animation: fadeSlideUp 0.8s 0.3s ease both;
   }
 
-  /* Boton de llamada a la accion en el hero */
   .hero-cta {
     display: inline-flex;
     align-items: center;
@@ -310,7 +225,6 @@
     box-shadow: 0 12px 32px rgba(201,168,76,0.25);
   }
 
-  /* Contenedor de las estadisticas en la parte inferior del hero */
   .hero-stats {
     display: flex;
     justify-content: center;
@@ -323,7 +237,6 @@
 
   .stat { text-align: center; }
 
-  /* Numero grande de cada estadistica */
   .stat-num {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
@@ -340,22 +253,9 @@
     margin-top: 0.25rem;
   }
 
-  /* =========================================================
-     ESTILOS GENERICOS PARA TODAS LAS SECCIONES
-     Aplica a #about, #team, #logbook, #video, #results
-  ========================================================= */
-  section {
-    padding: 6rem 2rem;
-    position: relative;
-  }
+  section { padding: 6rem 2rem; position: relative; }
+  .section-inner { max-width: 1080px; margin: 0 auto; }
 
-  /* Contenedor interior centrado con ancho maximo */
-  .section-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-  }
-
-  /* Etiqueta numerada pequena encima de cada titulo de seccion */
   .section-tag {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem;
@@ -366,7 +266,6 @@
     display: block;
   }
 
-  /* Titulo grande de cada seccion */
   .section-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.8rem, 4vw, 3rem);
@@ -376,34 +275,14 @@
     line-height: 1.2;
   }
 
-  /* Parrafo introductorio de cada seccion */
-  .section-lead {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--text-body);
-    max-width: 680px;
-  }
+  .section-lead { font-size: 1.05rem; line-height: 1.8; color: var(--text-body); max-width: 680px; }
+  .divider { width: 48px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
 
-  /* Linea decorativa dorada corta debajo del titulo */
-  .divider {
-    width: 48px;
-    height: 2px;
-    background: var(--gold);
-    margin: 1.5rem 0;
-  }
-
-  /* =========================================================
-     SECCION "EL ENSAYO" (#about)
-     Incluye texto explicativo y tarjetas informativas.
-  ========================================================= */
-  /* Secciones con colores alternados para diferenciarlas visualmente */
   #about   { background: var(--navy); }
   #team    { background: var(--navy-mid); }
   #logbook { background: var(--navy); }
-  #video   { background: var(--navy-mid); }
-  #results { background: var(--navy); }
+  #results { background: var(--navy-mid); }
 
-  /* Grilla de dos columnas: texto a la izquierda, tarjetas a la derecha */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -412,13 +291,8 @@
     margin-top: 4rem;
   }
 
-  /* Contenedor de las tarjetas informativas */
-  .info-cards {
-    display: grid;
-    gap: 1rem;
-  }
+  .info-cards { display: grid; gap: 1rem; }
 
-  /* Tarjeta informativa individual */
   .info-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(201,168,76,0.12);
@@ -428,7 +302,6 @@
     cursor: default;
   }
 
-  /* Efecto hover: resalta con borde dorado y se desplaza a la derecha */
   .info-card:hover {
     background: rgba(201,168,76,0.06);
     border-color: rgba(201,168,76,0.3);
@@ -436,28 +309,12 @@
   }
 
   .info-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .info-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); margin-bottom: 0.5rem; }
+  .info-card p { font-size: 0.88rem; line-height: 1.7; color: var(--text-muted); }
 
-  .info-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-  }
-
-  .info-card p {
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: var(--text-muted);
-  }
-
-  /* Texto corrido de la seccion About */
   .about-full-text { line-height: 1.9; color: var(--text-body); }
   .about-full-text p + p { margin-top: 1.25rem; }
 
-  /* =========================================================
-     SISTEMA DE TABS (pestanas bilingues)
-     Permite alternar entre contenido en Espanol e Ingles.
-  ========================================================= */
   .tabs-wrapper { margin-top: 2rem; }
 
   .tabs-nav {
@@ -481,28 +338,14 @@
     margin-bottom: -1px;
   }
 
-  /* Pestana activa resaltada en dorado */
   .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
-
-  /* El contenido de cada tab se oculta/muestra via JavaScript */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* =========================================================
-     SECCION EQUIPO (#team)
-     Presenta a los integrantes del proyecto con tarjetas individuales.
-  ========================================================= */
-  /* Bloque de texto introductorio del equipo */
   .team-intro { max-width: 700px; margin-bottom: 4rem; }
 
-  /* Grilla de tarjetas del equipo */
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 1.5rem;
-  }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.5rem; }
 
-  /* Tarjeta individual de cada integrante */
   .team-card {
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(201,168,76,0.1);
@@ -520,10 +363,8 @@
     box-shadow: 0 16px 40px rgba(0,0,0,0.3);
   }
 
-  /* Avatar circular con iniciales de cd integrante */
   .team-avatar {
-    width: 72px;
-    height: 72px;
+    width: 72px; height: 72px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--navy-light), var(--gold));
     display: flex;
@@ -534,24 +375,14 @@
     font-size: 1.4rem;
     color: var(--white);
     font-weight: 700;
+    overflow: hidden;
+    border: 2px solid rgba(201,168,76,0.3);
   }
 
-  .team-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-  }
+  .team-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .team-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--white); margin-bottom: 0.25rem; }
+  .team-role { font-size: 0.72rem; color: var(--gold); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
 
-  .team-role {
-    font-size: 0.72rem;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* Insignia de la universidad */
   .university-badge {
     display: inline-flex;
     align-items: center;
@@ -566,100 +397,37 @@
   .university-badge span { font-size: 0.85rem; color: var(--text-body); }
   .university-badge strong { color: var(--gold-light); }
 
-  /* =========================================================
-     SECCION BITACORA (#logbook)
-     Linea de tiempo cronologica con entradas del proyecto.
+  .logbook-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
 
-     COMO AGREGAR UNA NUEVA ENTRADA:
-     1. Copia un bloque completo <div class="log-entry">...</div>
-     2. Pegalo dentro del div .logbook-timeline
-     3. Actualiza: log-date, log-title, log-body
-     4. Para las imagenes ver instrucciones en cada .log-img-slot
+  .logbook-timeline { position: relative; padding-left: 3rem; }
 
-     COMO AGREGAR IMAGENES A UNA ENTRADA:
-     Dentro de .log-img-slot, reemplaza todo el contenido por:
-     <img src="ruta/imagen.jpg" alt="descripcion"
-          style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
-  ========================================================= */
-  .logbook-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  /* Contenedor de la linea de tiempo. La linea vertical es el pseudo-elemento ::before */
-  .logbook-timeline {
-    position: relative;
-    padding-left: 3rem;
-  }
-
-  /* Linea vertical dorada de la timeline */
   .logbook-timeline::before {
     content: '';
     position: absolute;
-    left: 0.75rem;
-    top: 0; bottom: 0;
+    left: 0.75rem; top: 0; bottom: 0;
     width: 1px;
     background: linear-gradient(180deg, var(--gold) 0%, rgba(201,168,76,0.1) 100%);
   }
 
-  /* Cada entrada de la bitacora */
   .log-entry { position: relative; margin-bottom: 2.5rem; }
 
-  /* Punto dorado en la linea de tiempo (circulo a la izquierda de cada entrada) */
   .log-entry::before {
     content: '';
     position: absolute;
-    left: -2.4rem;
-    top: 0.35rem;
-    width: 10px;
-    height: 10px;
+    left: -2.4rem; top: 0.35rem;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: var(--gold);
-    border: 2px solid var(--navy); /* Coincide con el fondo de #logbook */
+    border: 2px solid var(--navy);
     box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
   }
 
-  /* Etiqueta de la semana/fecha de la entrada */
-  .log-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    margin-bottom: 0.4rem;
-  }
+  .log-date { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 0.4rem; }
+  .log-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 0.5rem; }
+  .log-body { font-size: 0.9rem; line-height: 1.75; color: var(--text-muted); }
 
-  /* Titulo de la entrada de la bitacora */
-  .log-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-  }
+  .log-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
 
-  /* Texto descriptivo de la entrada */
-  .log-body {
-    font-size: 0.9rem;
-    line-height: 1.75;
-    color: var(--text-muted);
-  }
-
-  /* Grilla de espacios para imagenes dentro de cada entrada */
-  .log-images {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  /* Espacio individual para imagen (placeholder).
-     PARA AGREGAR UNA IMAGEN: reemplaza el contenido de este div con:
-     <img src="ruta/imagen.jpg" alt="descripcion"
-          style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
-  */
   .log-img-slot {
     aspect-ratio: 4/3;
     background: rgba(255,255,255,0.03);
@@ -676,144 +444,72 @@
     text-align: center;
     padding: 1rem;
     transition: all 0.2s;
-    overflow: hidden; /* Necesario para que las imagenes respeten el border-radius */
+    overflow: hidden;
   }
 
-  .log-img-slot:hover {
-    background: rgba(201,168,76,0.04);
-    border-color: rgba(201,168,76,0.35);
-  }
-
+  .log-img-slot:hover { background: rgba(201,168,76,0.04); border-color: rgba(201,168,76,0.35); }
   .log-img-slot .slot-icon { font-size: 1.5rem; opacity: 0.4; }
 
-  /* =========================================================
-     SECCION VIDEO 3D (#video)
-     Espacio reservado para el video de visualizacion 3D del ensayo.
+  .log-img-slot img {
+    cursor: zoom-in;
+    transition: transform 0.2s;
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
 
-     COMO AGREGAR EL VIDEO CUANDO ESTE LISTO:
-     Opcion A - YouTube:
-       Reemplaza el div .video-placeholder completo con:
-       <iframe width="100%"
-               style="aspect-ratio:16/9;border-radius:6px;border:none;max-width:860px;display:block;margin:0 auto;"
-               src="https://www.youtube.com/embed/TU_ID_DE_VIDEO"
-               allowfullscreen></iframe>
+  .log-img-slot img:hover { transform: scale(1.03); }
 
-     Opcion B - Archivo de video local:
-       <video controls
-              style="width:100%;max-width:860px;display:block;margin:0 auto;border-radius:6px;">
-         <source src="video/charpy-3d.mp4" type="video/mp4">
-       </video>
-  ========================================================= */
-  .video-container { margin-top: 3rem; position: relative; }
-
-  /* Placeholder animado que ocupa el espacio del video mientras no este disponible */
-  .video-placeholder {
-    aspect-ratio: 16/9;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 6px;
+  /* ── Resultado: un solo slot centrado ── */
+  .result-single {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    position: relative;
-    overflow: hidden;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-
-  /* Resplandor central del placeholder del video */
-  .video-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
-  }
-
-  /* Boton de play decorativo con animacion de pulso */
-  .play-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    border: 2px solid rgba(201,168,76,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    animation: pulse-ring 2.5s ease infinite;
-  }
-
-  /* Animacion del anillo pulsante del boton de play */
-  @keyframes pulse-ring {
-    0%   { box-shadow: 0 0 0 0 rgba(201,168,76,0.3); }
-    70%  { box-shadow: 0 0 0 20px rgba(201,168,76,0); }
-    100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
-  }
-
-  .play-icon svg { fill: var(--gold); width: 28px; height: 28px; margin-left: 4px; }
-
-  .video-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-
-  /* =========================================================
-     SECCION RESULTADOS DE ENCUESTA (#results)
-     Muestra los resultados visuales de la encuesta del proyecto.
-
-     COMO AGREGAR UNA IMAGEN O GRAFICA A UNA TARJETA:
-     Dentro de .result-card, reemplaza el contenido con:
-     <img src="ruta/grafica.png" alt="Resultado" style="width:100%;border-radius:4px;">
-     <p>Nombre de la grafica</p>
-  ========================================================= */
-  /* Grilla responsiva de tarjetas de resultados */
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
     margin-top: 3rem;
   }
 
-  /* Tarjeta individual de resultado (placeholder o imagen real) */
-  .result-card {
+  .result-card-single {
     background: rgba(255,255,255,0.02);
     border: 1px dashed rgba(201,168,76,0.2);
     border-radius: 6px;
-    padding: 2rem 1.5rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     text-align: center;
-    min-height: 180px;
+    width: min(560px, 100%);
+    min-height: 320px;
     transition: all 0.2s;
+    overflow: hidden;
   }
 
-  .result-card:hover {
+  .result-card-single:hover {
     background: rgba(201,168,76,0.04);
     border-color: rgba(201,168,76,0.35);
   }
 
-  .result-card .slot-icon { font-size: 2rem; opacity: 0.3; }
+  .result-card-single img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 4px;
+    cursor: zoom-in;
+    transition: transform 0.2s;
+  }
 
-  .result-card p {
+  .result-card-single img:hover { transform: scale(1.02); }
+  .result-card-single .slot-icon { font-size: 2.5rem; opacity: 0.3; }
+
+  .result-card-single p {
     font-size: 0.8rem;
     color: var(--text-muted);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.05em;
   }
 
-  /* =========================================================
-     PIE DE PAGINA (FOOTER)
-  ========================================================= */
   footer {
     background: #060e1a;
     padding: 3rem 2rem;
@@ -821,24 +517,10 @@
     border-top: 1px solid rgba(255,255,255,0.05);
   }
 
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 0.5rem; }
   .footer-sub { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; }
 
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem 1.5rem;
-    list-style: none;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
-  }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; list-style: none; margin-bottom: 2rem; }
 
   .footer-links a {
     font-size: 0.78rem;
@@ -852,40 +534,17 @@
   .footer-links a:hover { color: var(--gold); }
   .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
 
-  /* =========================================================
-     ANIMACIONES DE ENTRADA
-     fadeSlideUp: anima los elementos al cargar la pagina (hero)
-     fade-in / visible: anima los elementos al hacer scroll (secciones)
-  ========================================================= */
   @keyframes fadeSlideUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Clase base para elementos que se animan al entrar en el viewport */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  /* JavaScript agrega esta clase cuando el elemento es visible en pantalla */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-  /* Indicador de scroll ELIMINADO por solicitud del usuario */
-
-  /* =========================================================
-     LIGHTBOX - ZOOM DE IMAGENES AL HACER CLIC
-     Cuando el usuario hace clic en una imagen de la bitacora,
-     se muestra en pantalla completa con fondo oscuro.
-     Al hacer clic fuera o en la X se cierra.
-  ========================================================= */
-
-  /* Fondo oscuro del lightbox (overlay que cubre toda la pantalla) */
   .lightbox-overlay {
     display: none;
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(0,0,0,0.92);
     z-index: 9998;
     align-items: center;
@@ -894,20 +553,12 @@
     animation: lightbox-fade 0.25s ease;
   }
 
-  /* Estado visible del lightbox (activado por JavaScript) */
-  .lightbox-overlay.open {
-    display: flex;
-  }
+  .lightbox-overlay.open { display: flex; }
 
-  @keyframes lightbox-fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  @keyframes lightbox-fade { from { opacity: 0; } to { opacity: 1; } }
 
-  /* Imagen ampliada dentro del lightbox */
   .lightbox-img {
-    max-width: 90vw;
-    max-height: 88vh;
+    max-width: 90vw; max-height: 88vh;
     object-fit: contain;
     border-radius: 6px;
     box-shadow: 0 32px 80px rgba(0,0,0,0.6);
@@ -920,21 +571,15 @@
     to   { transform: scale(1);    opacity: 1; }
   }
 
-  /* Boton de cerrar el lightbox (X en esquina superior derecha) */
   .lightbox-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.5rem;
+    position: absolute; top: 1.25rem; right: 1.5rem;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     color: white;
     font-size: 1.4rem;
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: background 0.2s;
     line-height: 1;
@@ -942,38 +587,18 @@
 
   .lightbox-close:hover { background: rgba(255,255,255,0.2); }
 
-  /* Las imagenes reales en los slots de la bitacora muestran cursor de zoom */
-  .log-img-slot img {
-    cursor: zoom-in;
-    transition: transform 0.2s;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-
-  .log-img-slot img:hover { transform: scale(1.03); }
-
-  /* =========================================================
-     ESTILOS RESPONSIVOS PARA MOVIL Y TABLET
-     A partir de 768px o menos se adapta a pantallas pequenas.
-  ========================================================= */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; } /* Se oculta en movil, se activa con el hamburger */
+    .nav-links { display: none; }
     .nav-links.open {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 64px; left: 0; right: 0;
+      display: flex; flex-direction: column;
+      position: fixed; top: 64px; left: 0; right: 0;
       background: rgba(10,22,40,0.97);
-      padding: 2rem;
-      gap: 1.5rem;
+      padding: 2rem; gap: 1.5rem;
       backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(201,168,76,0.1);
     }
-    .hamburger { display: flex; } /* Aparece el icono de menu en movil */
+    .hamburger { display: flex; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-stats { gap: 2rem; flex-wrap: wrap; }
     .team-grid { grid-template-columns: repeat(2, 1fr); }
@@ -981,39 +606,28 @@
   }
 
   @media (max-width: 480px) {
-    .team-grid    { grid-template-columns: 1fr 1fr; }
-    .results-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .result-card-single { min-height: 240px; }
   }
 
 </style>
 </head>
 <body>
 
-<!-- =========================================================
-     BARRA DE NAVEGACION FIJA
-     Contiene: logo, enlaces a secciones, toggle de idioma y menu hamburguesa.
-     El id="main-nav" es usado por JavaScript para reducir el padding al hacer scroll.
-     ORDEN DE NAVEGACION: El Ensayo > Equipo > Bitacora > Video 3D > Resultados
-========================================================= -->
+<!-- NAV -->
 <nav id="main-nav">
   <div class="nav-logo">Ensayo Charpy<span> / Invenio</span></div>
-
-  <!-- Lista de enlaces. En movil se oculta y se activa con el boton hamburguesa -->
   <ul class="nav-links" id="nav-links">
     <li><a href="#about"   data-es="El Ensayo"  data-en="The Test">El Ensayo</a></li>
     <li><a href="#team"    data-es="Equipo"     data-en="Team">Equipo</a></li>
     <li><a href="#logbook" data-es="Bitácora"   data-en="Logbook">Bitácora</a></li>
-    <li><a href="#video"   data-es="Video 3D"   data-en="3D Video">Video 3D</a></li>
     <li><a href="#results" data-es="Resultados" data-en="Results">Resultados</a></li>
   </ul>
-
   <div style="display:flex;align-items:center;gap:1rem;">
-    <!-- Botones de cambio de idioma. setLang() se define en el script al final -->
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('es')">ES</button>
       <button class="lang-btn"        onclick="setLang('en')">EN</button>
     </div>
-    <!-- Icono de menu para movil. toggleMenu() abre/cierra nav-links -->
     <div class="hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
@@ -1021,16 +635,9 @@
 </nav>
 
 
-<!-- =========================================================
-     SECCION HERO (PANTALLA PRINCIPAL DE BIENVENIDA)
-     Primera pantalla visible al cargar la pagina.
-========================================================= -->
+<!-- HERO -->
 <section id="hero">
-
-  <!-- Fondo con gradientes superpuestos -->
   <div class="hero-bg"></div>
-
-  <!-- Ilustracion decorativa SVG del pendulo Charpy centrada y sin texto SPECIMEN -->
   <svg class="pendulum-deco" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg">
     <line x1="150" y1="0"   x2="150" y2="350" stroke="white" stroke-width="3"/>
     <circle cx="150" cy="380" r="40" fill="none" stroke="white" stroke-width="3"/>
@@ -1038,37 +645,25 @@
     <path d="M120 100 L180 100 L200 150 L100 150 Z" fill="none" stroke="white" stroke-width="2"/>
     <rect x="60" y="480" width="180" height="120" rx="4" fill="none" stroke="white" stroke-width="2"/>
   </svg>
-
-  <!-- Contenido central del hero -->
   <div class="hero-grid">
-
-    <!-- Etiqueta superior del hero -->
     <div class="hero-eyebrow"
          data-es="Proyecto de Mecatrónica · Universidad Invenio · 2026"
          data-en="Mechatronics Project · Universidad Invenio · 2026">
       Proyecto de Mecatrónica · Universidad Invenio · 2026
     </div>
-
-    <!-- Titulo principal -->
     <h1 class="hero-title">ENSAYO DE<br><span class="accent">CHARPY</span></h1>
     <p class="hero-subtitle-line">Ensayo de Impacto · Resistencia de Materiales</p>
-
-    <!-- Descripcion breve -->
     <p class="hero-desc"
        data-es="Una exploración académica del ensayo de impacto Charpy: el método estándar para medir la tenacidad de los materiales frente a la fractura bajo impacto dinámico."
        data-en="An academic exploration of the Charpy impact test: the standard method for measuring the toughness of materials against fracture under dynamic impact.">
       Una exploración académica del ensayo de impacto Charpy: el método estándar para medir la tenacidad de los materiales frente a la fractura bajo impacto dinámico.
     </p>
-
-    <!-- Boton de accion principal -->
     <a href="#about" class="hero-cta">
       <span data-es="Explorar el Proyecto" data-en="Explore the Project">Explorar el Proyecto</span>
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
-
-    <!-- Estadisticas numericas en la parte inferior del hero -->
     <div class="hero-stats">
       <div class="stat">
         <span class="stat-num">1900</span>
@@ -1084,19 +679,12 @@
       </div>
     </div>
   </div>
-
-  <!-- fin contenido central del hero -->
 </section>
 
 
-<!-- =========================================================
-     SECCION "EL ENSAYO DE IMPACTO CHARPY" (#about)
-     Explica el test con texto y tarjetas informativas.
-     Incluye tabs para cambiar entre Espanol e Ingles.
-========================================================= -->
+<!-- EL ENSAYO -->
 <section id="about">
   <div class="section-inner">
-
     <span class="section-tag fade-in"
           data-es="01 — El Ensayo" data-en="01 — The Test">01 — El Ensayo</span>
     <h2 class="section-title fade-in"
@@ -1105,21 +693,14 @@
       ¿Qué es el Ensayo de Impacto Charpy?
     </h2>
     <div class="divider fade-in"></div>
-
-    <!-- Contenido bilingue - se muestra segun el idioma activo -->
     <div class="tabs-wrapper fade-in">
       <div class="tabs-nav" style="display:none;">
-        <button class="tab-btn active" onclick="switchTab('es-tab', this)"
-                data-es="En Español" data-en="In Spanish">En Español</button>
-        <button class="tab-btn"       onclick="switchTab('en-tab', this)"
-                data-es="In English"  data-en="In English">In English</button>
+        <button class="tab-btn active" onclick="switchTab('es-tab', this)">En Español</button>
+        <button class="tab-btn"        onclick="switchTab('en-tab', this)">In English</button>
       </div>
 
-      <!-- CONTENIDO EN ESPANOL -->
       <div class="tab-content active" id="es-tab">
         <div class="about-grid">
-
-          <!-- Columna izquierda: texto explicativo -->
           <div class="about-text">
             <div class="about-full-text">
               <p>El <strong style="color:var(--gold)">Ensayo de Impacto Charpy</strong> es una prueba estandarizada utilizada en ingeniería de materiales para determinar la <em>energía de impacto absorbida</em> por una muestra de material al fracturarse.</p>
@@ -1128,9 +709,6 @@
               <p>Desarrollado por el ingeniero francés Georges Charpy a principios del siglo XX, este método es hoy parte de normas internacionales como <em>ASTM E23</em> e <em>ISO 148-1</em>.</p>
             </div>
           </div>
-
-          <!-- Columna derecha: tarjetas informativas
-               NOTA: solo 3 tarjetas, se elimino "Temperatura de transicion" -->
           <div class="info-cards">
             <div class="info-card">
               <div class="info-card-icon">🔨</div>
@@ -1148,14 +726,11 @@
               <p>Control de calidad en aceros estructurales, selección de materiales para ambientes criogénicos y certificación de soldaduras.</p>
             </div>
           </div>
-
         </div>
-      </div><!-- fin #es-tab -->
+      </div>
 
-      <!-- CONTENIDO EN INGLES -->
       <div class="tab-content" id="en-tab">
         <div class="about-grid">
-
           <div class="about-text">
             <div class="about-full-text">
               <p>The <strong style="color:var(--gold)">Charpy Impact Test</strong> is a standardized engineering test used to determine the <em>impact energy absorbed</em> by a material specimen at the moment of fracture.</p>
@@ -1164,7 +739,6 @@
               <p>Developed by French engineer Georges Charpy in the early 20th century, this method is today part of international standards such as <em>ASTM E23</em> and <em>ISO 148-1</em>.</p>
             </div>
           </div>
-
           <div class="info-cards">
             <div class="info-card">
               <div class="info-card-icon">🔨</div>
@@ -1182,111 +756,78 @@
               <p>Quality control in structural steels, material selection for cryogenic environments, and weld certification.</p>
             </div>
           </div>
-
         </div>
-      </div><!-- fin #en-tab -->
-
-    </div><!-- fin .tabs-wrapper -->
+      </div>
+    </div>
   </div>
 </section>
 
 
-<!-- =========================================================
-     SECCION EQUIPO (#team)
-     Va despues de El Ensayo y antes de la Bitacora.
-     Presenta los integrantes y la descripcion del proyecto con
-     el detalle de la automatizacion mediante Arduino y potenciometro.
-========================================================= -->
+<!-- EQUIPO -->
 <section id="team">
   <div class="section-inner">
-
     <span class="section-tag fade-in"
           data-es="02 — Quiénes Somos" data-en="02 — Who We Are">02 — Quiénes Somos</span>
-    <h2 class="section-title fade-in"
-        data-es="El Equipo" data-en="The Team">El Equipo</h2>
+    <h2 class="section-title fade-in" data-es="El Equipo" data-en="The Team">El Equipo</h2>
     <div class="divider fade-in"></div>
 
-    <!-- Bloque de descripcion del equipo -->
     <div class="team-intro fade-in">
       <div class="university-badge">
         <span>🎓</span>
         <span><strong>Universidad Invenio</strong> · Ingeniería en Mecatrónica</span>
       </div>
-
       <div class="about-full-text" style="font-size:1rem;">
-
-        <!-- Parrafo 1: quienes somos -->
         <p data-es="Somos estudiantes de Ingeniería en Mecatrónica de la <strong style='color:var(--gold-light)'>Universidad Invenio</strong>, apasionados por la integración de la mecánica, la electrónica y la programación para resolver desafíos de ingeniería reales."
            data-en="We are Mechatronics Engineering students from <strong style='color:var(--gold-light)'>Universidad Invenio</strong>, passionate about integrating mechanics, electronics, and programming to solve real engineering challenges.">
           Somos estudiantes de Ingeniería en Mecatrónica de la <strong style="color:var(--gold-light)">Universidad Invenio</strong>, apasionados por la integración de la mecánica, la electrónica y la programación para resolver desafíos de ingeniería reales.
         </p>
-
-        <!-- Parrafo 2: objetivo del proyecto con descripcion de automatizacion -->
         <p style="margin-top:1rem;"
            data-es="En este proyecto desarrollamos el <strong style='color:var(--gold)'>Ensayo de Impacto Charpy</strong> con el objetivo de comprender y caracterizar experimentalmente la tenacidad y el comportamiento ante impacto de distintos materiales. Nuestra vision innovadora nos llevo mas alla: <strong style='color:var(--steel-light)'>automatizamos la adquisicion de resultados</strong> del ensayo mediante un <strong style='color:var(--steel-light)'>potenciometro semi-industrial</strong> que mide tanto la altura inicial del pendulo como la altura alcanzada tras el impacto. Los datos son procesados en tiempo real por un <strong style='color:var(--gold)'>Arduino</strong>, que calcula la energia absorbida y proyecta el resultado directamente en una <strong style='color:var(--steel-light)'>pantalla LCD</strong>, eliminando la lectura manual y reduciendo el error humano."
            data-en="In this project, we developed the <strong style='color:var(--gold)'>Charpy Impact Test</strong> with the objective of experimentally understanding and characterizing the toughness and impact behavior of different materials. Our innovative approach went further: we <strong style='color:var(--steel-light)'>automated the data acquisition</strong> of the test using a <strong style='color:var(--steel-light)'>semi-industrial potentiometer</strong> that measures both the initial pendulum height and the height reached after impact. The data is processed in real time by an <strong style='color:var(--gold)'>Arduino</strong>, which calculates the absorbed energy and displays the result on an <strong style='color:var(--steel-light)'>LCD screen</strong>, eliminating manual reading and reducing human error.">
           En este proyecto desarrollamos el <strong style="color:var(--gold)">Ensayo de Impacto Charpy</strong> con el objetivo de comprender y caracterizar experimentalmente la tenacidad y el comportamiento ante impacto de distintos materiales. Nuestra visión innovadora nos llevó más allá: <strong style="color:var(--steel-light)">automatizamos la adquisición de resultados</strong> del ensayo mediante un <strong style="color:var(--steel-light)">potenciómetro semi-industrial</strong> que mide tanto la altura inicial del péndulo como la altura alcanzada tras el impacto. Los datos son procesados en tiempo real por un <strong style="color:var(--gold)">Arduino</strong>, que calcula la energía absorbida y proyecta el resultado directamente en una <strong style="color:var(--steel-light)">pantalla LCD</strong>, eliminando la lectura manual y reduciendo el error humano.
         </p>
-
       </div>
     </div>
 
-    <!-- Grilla de tarjetas de los 5 integrantes del equipo -->
     <div class="team-grid fade-in">
       <div class="team-card">
-        <div class="team-avatar">DR</div>
+        <div class="team-avatar"><img src="fotos/danna.jpeg" alt="Danna Ruiz"></div>
         <div class="team-name">Danna Ruiz</div>
-        <div class="team-role" data-es="Mecatrónica" data-en="Mechatronics">Mecatrónica</div>
+        <div class="team-role">Mecatrónica</div>
       </div>
       <div class="team-card">
-        <div class="team-avatar">IM</div>
+        <div class="team-avatar"><img src="fotos/ignacio.jpeg" alt="Ignacio Moya"></div>
         <div class="team-name">Ignacio Moya</div>
-        <div class="team-role" data-es="Mecatrónica" data-en="Mechatronics">Mecatrónica</div>
+        <div class="team-role">Mecatrónica</div>
       </div>
       <div class="team-card">
-        <div class="team-avatar">KM</div>
+        <div class="team-avatar"><img src="fotos/keisy.jpeg" alt="Keysi Montiel"></div>
         <div class="team-name">Keysi Montiel</div>
-        <div class="team-role" data-es="Mecatrónica" data-en="Mechatronics">Mecatrónica</div>
+        <div class="team-role">Mecatrónica</div>
       </div>
       <div class="team-card">
-        <div class="team-avatar">DM</div>
+        <div class="team-avatar"><img src="fotos/davidmora.jpeg" alt="David Mora"></div>
         <div class="team-name">David Mora</div>
-        <div class="team-role" data-es="Mecatrónica" data-en="Mechatronics">Mecatrónica</div>
+        <div class="team-role">Mecatrónica</div>
       </div>
       <div class="team-card">
-        <div class="team-avatar">DB</div>
+        <div class="team-avatar"><img src="fotos/coronel.jpeg" alt="David Barahona"></div>
         <div class="team-name">David Barahona</div>
-        <div class="team-role" data-es="Mecatrónica" data-en="Mechatronics">Mecatrónica</div>
+        <div class="team-role">Mecatrónica</div>
       </div>
     </div>
-
   </div>
 </section>
 
 
-<!-- =========================================================
-     SECCION BITACORA (#logbook)
-     Linea de tiempo cronologica del desarrollo del proyecto.
-
-     COMO AGREGAR UNA NUEVA ENTRADA:
-     1. Copia un bloque completo <div class="log-entry">...</div>
-     2. Pegalo dentro del div .logbook-timeline
-     3. Actualiza: log-date, log-title, log-body y los slots de imagenes
-
-     COMO AGREGAR IMAGENES A UNA ENTRADA EXISTENTE:
-     Dentro de .log-img-slot, reemplaza todo el contenido interior por:
-     <img src="ruta/imagen.jpg" alt="descripcion"
-          style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
-========================================================= -->
+<!-- BITÁCORA -->
 <section id="logbook">
   <div class="section-inner">
-
     <div class="logbook-header">
       <div>
         <span class="section-tag fade-in"
               data-es="03 — Bitácora del Proyecto" data-en="03 — Project Logbook">03 — Bitácora del Proyecto</span>
-        <h2 class="section-title fade-in"
-            data-es="Registro de Avances" data-en="Progress Log">Bitácora</h2>
+        <h2 class="section-title fade-in" data-es="Registro de Avances" data-en="Progress Log">Bitácora</h2>
         <div class="divider fade-in"></div>
         <p class="section-lead fade-in" style="max-width:500px;"
            data-es="Documentación cronológica del desarrollo del proyecto. Se irán agregando nuevas entradas conforme avancemos."
@@ -1296,367 +837,153 @@
       </div>
     </div>
 
-    <!-- Contenedor de la linea de tiempo -->
     <div class="logbook-timeline fade-in">
 
-      <!-- ENTRADA 1: Inicio del Proyecto - Investigacion Teorica -->
       <div class="log-entry">
         <div class="log-date">SEMANA 01 · 2026</div>
-        <div class="log-title"
-             data-es="Inicio del Proyecto — Investigación Teórica"
-             data-en="Project Start — Theoretical Research">
-          Inicio del Proyecto — Investigación Teórica
-        </div>
-        <p class="log-body"
-           data-es="Revisión bibliográfica del ensayo de impacto Charpy. Estudio de normas ASTM E23 e ISO 148-1. Definición de objetivos y alcance del proyecto."
-           data-en="Bibliographic review of the Charpy impact test. Study of ASTM E23 and ISO 148-1 standards. Definition of project objectives and scope.">
-          Revisión bibliográfica del ensayo de impacto Charpy. Estudio de normas ASTM E23 e ISO 148-1. Definición de objetivos y alcance del proyecto.
-        </p>
-        <!-- IMAGENES SEMANA 01 -->
-        <div class="log-images">
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 01
-                 Sustituir con: <img src="fotos/sem01-a.jpg" alt="Investigacion" style="width:100%;height:100%;object-fit:cover;border-radius:4px;"> -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 01 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ENTRADA 2: Diseño del Montaje -->
-      <div class="log-entry">
-        <div class="log-date">SEMANA 01 · 2026</div>
-        <div class="log-title"
-             data-es="Diseño del Montaje"
-             data-en="Assembly Design">
-          Diseño del Montaje
-        </div>
+        <div class="log-title" data-es="Diseño del Montaje" data-en="Assembly Design">Diseño del Montaje</div>
         <p class="log-body"
            data-es="Planeación y diseño del montaje físico completo del ensayo Charpy. Definición de dimensiones, materiales estructurales y distribución de componentes mecánicos."
            data-en="Planning and design of the complete physical assembly. Definition of dimensions, structural materials, and mechanical component layout.">
           Planeación y diseño del montaje físico completo del ensayo Charpy. Definición de dimensiones, materiales estructurales y distribución de componentes mecánicos.
         </p>
-        <!-- IMAGENES: Diseño del Montaje -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - DISEÑO DEL MONTAJE -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - DISEÑO DEL MONTAJE -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/diseño.jpeg" alt="Diseño del montaje" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-      <!-- ENTRADA 3: Semana 2 - Montaje de la base -->
       <div class="log-entry">
         <div class="log-date">SEMANA 02 · 2026</div>
-        <div class="log-title"
-             data-es="Montaje de la Base"
-             data-en="Base Assembly">
-          Montaje de la Base
-        </div>
+        <div class="log-title" data-es="Montaje de la Base" data-en="Base Assembly">Montaje de la Base</div>
         <p class="log-body"
            data-es="Construcción y ensamble de la base estructural del ensayo. Corte, ajuste y fijación de los materiales que conforman el soporte principal del péndulo."
            data-en="Construction and assembly of the structural base of the test. Cutting, fitting, and fastening of the main pendulum support materials.">
           Construcción y ensamble de la base estructural del ensayo. Corte, ajuste y fijación de los materiales que conforman el soporte principal del péndulo.
         </p>
-        <!-- IMAGENES: Semana 2 -->
         <div class="log-images">
-
-            <!-- Imagen 1 -->
-            <div class="log-img-slot">
-                <img src="fotos/charpy-base.jpeg" alt="Montaje de la base"
-                    style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
-            </div>
-
-            <!-- Imagen 2 -->
-            <div class="log-img-slot">
-                <img src="fotos/charpy-base2.jpeg" alt="Montaje de la base"
-                    style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
-            </div>
-
+          <div class="log-img-slot">
+            <img src="fotos/charpy-base.jpeg" alt="Base del ensayo" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
+          </div>
         </div>
+      </div>
 
-      <!-- ENTRADA 4: Semana 3 - Creacion del martillo -->
       <div class="log-entry">
         <div class="log-date">SEMANA 03 · 2026</div>
-        <div class="log-title"
-             data-es="Creación del Martillo"
-             data-en="Hammer Creation">
-          Creación del Martillo
-        </div>
+        <div class="log-title" data-es="Creación del Martillo" data-en="Hammer Creation">Creación del Martillo</div>
         <p class="log-body"
            data-es="Diseño y fabricación del martillo (péndulo) del ensayo. Selección del peso adecuado, conformación de la cabeza de impacto y ensamble al eje de giro."
            data-en="Design and fabrication of the test hammer (pendulum). Selection of appropriate weight, shaping of the impact head, and assembly to the pivot axis.">
           Diseño y fabricación del martillo (péndulo) del ensayo. Selección del peso adecuado, conformación de la cabeza de impacto y ensamble al eje de giro.
         </p>
-        <!-- IMAGENES: Semana 3 -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 03 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 03 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/martillo.jpeg" alt="Martillo péndulo" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-      <!-- ENTRADA 5: Semana 4 - Creacion del circuito -->
       <div class="log-entry">
         <div class="log-date">SEMANA 04 · 2026</div>
-        <div class="log-title"
-             data-es="Creación del Circuito"
-             data-en="Circuit Creation">
-          Creación del Circuito
-        </div>
+        <div class="log-title" data-es="Creación del Circuito" data-en="Circuit Creation">Creación del Circuito</div>
         <p class="log-body"
            data-es="Diseño y armado del circuito electrónico. Conexión del potenciómetro semi-industrial al Arduino, programación del cálculo de energía absorbida y configuración de la pantalla LCD."
            data-en="Design and assembly of the electronic circuit. Connection of the semi-industrial potentiometer to the Arduino, programming of absorbed energy calculation, and LCD screen configuration.">
           Diseño y armado del circuito electrónico. Conexión del potenciómetro semi-industrial al Arduino, programación del cálculo de energía absorbida y configuración de la pantalla LCD.
         </p>
-        <!-- IMAGENES: Semana 4 -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 04 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 04 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/circuito.jpeg" alt="Circuito electrónico" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-      <!-- ENTRADA 6: Semana 5 - Diseño de probetas -->
       <div class="log-entry">
         <div class="log-date">SEMANA 05 · 2026</div>
-        <div class="log-title"
-             data-es="Diseño de Probetas"
-             data-en="Specimen Design">
-          Diseño de Probetas
-        </div>
+        <div class="log-title" data-es="Diseño de Probetas" data-en="Specimen Design">Diseño de Probetas</div>
         <p class="log-body"
            data-es="Diseño y preparación de las probetas de prueba según la norma ISO 148. Selección de materiales, definición de dimensiones y mecanizado de la entalla en V."
            data-en="Design and preparation of test specimens according to ISO 148. Material selection, dimension definition, and V-notch machining.">
           Diseño y preparación de las probetas de prueba según la norma ISO 148. Selección de materiales, definición de dimensiones y mecanizado de la entalla en V.
         </p>
-        <!-- IMAGENES: Semana 5 -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 05 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 05 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/probeta.jpeg" alt="Probetas" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-      <!-- ENTRADA 7: Semana 6 - Montaje del circuito al ensayo -->
       <div class="log-entry">
         <div class="log-date">SEMANA 06 · 2026</div>
-        <div class="log-title"
-             data-es="Montaje del Circuito al Ensayo"
-             data-en="Circuit Integration into Test">
-          Montaje del Circuito al Ensayo
-        </div>
+        <div class="log-title" data-es="Montaje del Circuito al Ensayo" data-en="Circuit Integration into Test">Montaje del Circuito al Ensayo</div>
         <p class="log-body"
            data-es="Integración del sistema electrónico al montaje mecánico. Fijación del potenciómetro al eje del péndulo, cableado, ajuste de la pantalla LCD y primeras pruebas de lectura de ángulo."
            data-en="Integration of the electronic system into the mechanical assembly. Potentiometer fixation to the pendulum axis, wiring, LCD screen adjustment, and first angle reading tests.">
           Integración del sistema electrónico al montaje mecánico. Fijación del potenciómetro al eje del péndulo, cableado, ajuste de la pantalla LCD y primeras pruebas de lectura de ángulo.
         </p>
-        <!-- IMAGENES: Semana 6 -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 06 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 06 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/incorporacion.jpeg" alt="Integración circuito" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-      <!-- ENTRADA 8: Semana 7 - Pruebas del ensayo -->
       <div class="log-entry">
         <div class="log-date">SEMANA 07 · 2026</div>
-        <div class="log-title"
-             data-es="Pruebas del Ensayo"
-             data-en="Test Trials">
-          Pruebas del Ensayo
-        </div>
+        <div class="log-title" data-es="Pruebas del Ensayo" data-en="Test Trials">Pruebas del Ensayo</div>
         <p class="log-body"
            data-es="Realización de las pruebas finales del ensayo de impacto Charpy. Verificación de la precisión del sistema de medición automatizado, fractura de probetas y registro de resultados."
            data-en="Execution of the final Charpy impact test trials. Verification of the automated measurement system accuracy, specimen fracture, and results recording.">
           Realización de las pruebas finales del ensayo de impacto Charpy. Verificación de la precisión del sistema de medición automatizado, fractura de probetas y registro de resultados.
         </p>
-        <!-- IMAGENES: Semana 7 -->
         <div class="log-images">
           <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 1 - SEMANA 07 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
-          </div>
-          <div class="log-img-slot">
-            <!-- ESPACIO PARA IMAGEN 2 - SEMANA 07 -->
-            <div class="slot-icon">📷</div>
-            <span data-es="Imagen próximamente" data-en="Image coming soon">Imagen próximamente</span>
+            <img src="fotos/pruebas.jpeg" alt="Pruebas finales" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
           </div>
         </div>
       </div>
 
-    </div><!-- fin .logbook-timeline -->
-  </div>
-</section>
-
-
-<!-- =========================================================
-     SECCION VISUALIZACION 3D (#video)
-     Espacio reservado para el video de visualizacion 3D del ensayo.
-
-     COMO AGREGAR EL VIDEO CUANDO ESTE LISTO:
-     Opcion A - YouTube: reemplaza el div .video-placeholder con:
-       <iframe width="100%"
-               style="aspect-ratio:16/9;border-radius:6px;border:none;max-width:860px;display:block;margin:0 auto;"
-               src="https://www.youtube.com/embed/TU_ID_DE_VIDEO"
-               allowfullscreen></iframe>
-
-     Opcion B - Archivo local: reemplaza el div .video-placeholder con:
-       <video controls
-              style="width:100%;max-width:860px;display:block;margin:0 auto;border-radius:6px;">
-         <source src="video/charpy-3d.mp4" type="video/mp4">
-       </video>
-========================================================= -->
-<section id="video">
-  <div class="section-inner">
-
-    <span class="section-tag fade-in"
-          data-es="04 — Visualización 3D" data-en="04 — 3D Visualization">04 — Visualización 3D</span>
-    <h2 class="section-title fade-in"
-        data-es="Visualización 3D del Ensayo" data-en="3D Visualization of the Test">
-      Visualización 3D del Ensayo
-    </h2>
-    <div class="divider fade-in"></div>
-
-    <p class="section-lead fade-in"
-       data-es="En esta sección se presentará una animación en 3D que ilustra el ensayo de impacto Charpy en detalle, mostrando cada una de las partes diseñadas y fabricadas por el equipo: la base estructural, el martillo pendular, el sistema de sujeción de probetas y el circuito electrónico de medición automatizada."
-       data-en="This section will feature a 3D animation illustrating the Charpy impact test in detail, showcasing each part designed and built by the team: the structural base, the pendulum hammer, the specimen clamping system, and the automated measurement electronic circuit.">
-      En esta sección se presentará una animación en 3D que ilustra el ensayo de impacto Charpy en detalle, mostrando cada una de las partes diseñadas y fabricadas por el equipo: la base estructural, el martillo pendular, el sistema de sujeción de probetas y el circuito electrónico de medición automatizada.
-    </p>
-
-    <!-- Contenedor del video.
-         ESPACIO PARA VIDEO 3D: ver instrucciones en el comentario de la seccion (#video) -->
-    <div class="video-container fade-in">
-      <div class="video-placeholder">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <div class="video-label">
-          <span data-es="Visualización 3D · Próximamente" data-en="3D Visualization · Coming Soon">Visualización 3D · Próximamente</span><br>
-          <span style="font-size:0.7rem;opacity:0.5;"
-                data-es="El video será integrado aquí"
-                data-en="The video will be embedded here">El video será integrado aquí</span>
-        </div>
-      </div>
     </div>
-
   </div>
 </section>
 
 
-<!-- =========================================================
-     SECCION RESULTADOS DE ENCUESTA (#results)
-     Muestra graficas e imagenes de resultados de la encuesta.
-
-     COMO AGREGAR UNA IMAGEN O GRAFICA A UNA TARJETA:
-     Dentro de .result-card, reemplaza su contenido con:
-     <img src="ruta/grafica.png" alt="Resultado" style="width:100%;border-radius:4px;">
-     <p>Nombre de la grafica</p>
-========================================================= -->
+<!-- RESULTADOS -->
 <section id="results">
   <div class="section-inner">
-
     <span class="section-tag fade-in"
-          data-es="05 — Encuesta & Resultados" data-en="05 — Survey & Results">05 — Encuesta & Resultados</span>
+          data-es="04 — Encuesta & Resultados" data-en="04 — Survey & Results">04 — Encuesta & Resultados</span>
     <h2 class="section-title fade-in"
         data-es="Resultados de la Encuesta" data-en="Survey Results">Resultados de la Encuesta</h2>
     <div class="divider fade-in"></div>
-
-    <!-- Descripcion sin frase "proximamente" -->
     <p class="section-lead fade-in"
        data-es="Los resultados de la encuesta realizada sobre el Ensayo de Impacto Charpy serán publicados aquí."
        data-en="The results of the survey conducted on the Charpy Impact Test will be published here.">
       Los resultados de la encuesta realizada sobre el Ensayo de Impacto Charpy serán publicados aquí.
     </p>
 
-    <!-- Grilla de 4 espacios para graficas e imagenes de resultados -->
-    <div class="results-grid fade-in">
-
-      <!-- ESPACIO PARA GRAFICA 1 -->
-      <div class="result-card">
-        <div class="slot-icon">📊</div>
-        <p data-es="Gráfica 1 · Próximamente" data-en="Chart 1 · Coming Soon">Gráfica 1 · Próximamente</p>
+    <!-- UN SOLO SLOT CENTRADO PARA LA IMAGEN DE LA ENCUESTA -->
+    <div class="result-single fade-in">
+      <div class="result-card-single">
+        <!-- PARA AGREGAR LA FOTO: borra las 2 líneas de abajo y pon:
+             <img src="fotos/TU-FOTO.jpg" alt="Resultados encuesta"> -->
+        <img src="fotos/encuesta.jpeg" alt="Resultados encuesta">
       </div>
-
-      <!-- ESPACIO PARA GRAFICA 2 -->
-      <div class="result-card">
-        <div class="slot-icon">📊</div>
-        <p data-es="Gráfica 2 · Próximamente" data-en="Chart 2 · Coming Soon">Gráfica 2 · Próximamente</p>
-      </div>
-
-      <!-- ESPACIO PARA GRAFICA 3 -->
-      <div class="result-card">
-        <div class="slot-icon">📈</div>
-        <p data-es="Gráfica 3 · Próximamente" data-en="Chart 3 · Coming Soon">Gráfica 3 · Próximamente</p>
-      </div>
-
-      <!-- ESPACIO PARA IMAGEN DE RESULTADOS 4 -->
-      <div class="result-card">
-        <div class="slot-icon">🖼️</div>
-        <p data-es="Imagen de resultados · Próximamente" data-en="Results image · Coming Soon">Imagen de resultados · Próximamente</p>
-      </div>
-
     </div>
+
   </div>
 </section>
 
 
-<!-- =========================================================
-     LIGHTBOX - OVERLAY PARA VER IMAGENES EN ZOOM
-     Se activa al hacer clic en cualquier imagen de la bitacora.
-     Se cierra al hacer clic fuera de la imagen o en el boton X.
-========================================================= -->
+<!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
   <img class="lightbox-img" id="lightbox-img" src="" alt="Imagen ampliada">
 </div>
 
 
-<!-- =========================================================
-     PIE DE PAGINA (FOOTER)
-     Muestra nombre del proyecto, universidad, año y enlaces rapidos.
-========================================================= -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-logo">Ensayo de Impacto Charpy</div>
   <div class="footer-sub"
@@ -1664,16 +991,12 @@
        data-en="Universidad Invenio · Mechatronics Engineering · 2026">
     Universidad Invenio · Ingeniería en Mecatrónica · 2026
   </div>
-
-  <!-- Enlaces rapidos del footer (mismo orden que el navbar) -->
   <ul class="footer-links">
     <li><a href="#about"   data-es="El Ensayo"  data-en="The Test">El Ensayo</a></li>
     <li><a href="#team"    data-es="Equipo"     data-en="Team">Equipo</a></li>
     <li><a href="#logbook" data-es="Bitácora"   data-en="Logbook">Bitácora</a></li>
-    <li><a href="#video"   data-es="Video 3D"   data-en="3D Video">Video 3D</a></li>
     <li><a href="#results" data-es="Resultados" data-en="Results">Resultados</a></li>
   </ul>
-
   <div class="footer-copy"
        data-es="© 2026 Equipo Charpy — Universidad Invenio. Proyecto académico."
        data-en="© 2026 Charpy Team — Universidad Invenio. Academic project.">
@@ -1682,45 +1005,24 @@
 </footer>
 
 
-<!-- =========================================================
-     JAVASCRIPT
-     Toda la logica interactiva de la pagina esta aqui.
-     No requiere librerias externs
-========================================================= -->
 <script>
 
-  // -------------------------------------------------------
-  // CAMBIO DE IDIOMA (ES / EN)
-  // Busca todos los elementos con atributo data-es o data-en
-  // y reemplaza su contenido con el idioma seleccionado.
-  // Tambien sincroniza el contenido de los tabs de la seccion #about.
-  // -------------------------------------------------------
   let currentLang = 'es';
 
   function setLang(lang) {
     currentLang = lang;
-
-    // Actualiza el estado visual de los botones ES / EN
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
     });
-
-    // Reemplaza el innerHTML de todos los elementos que tienen el atributo del idioma
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       el.innerHTML = el.getAttribute('data-' + lang);
     });
-
-    // Sincroniza automaticamente el tab de la seccion #about con el idioma seleccionado
     const tabId = lang === 'es' ? 'es-tab' : 'en-tab';
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     const targetTab = document.getElementById(tabId);
     if (targetTab) targetTab.classList.add('active');
   }
 
-  // -------------------------------------------------------
-  // SISTEMA DE TABS (pestanas de idioma en la seccion #about)
-  // Muestra el S del tab seleccionado y oculta el resto.
-  // -------------------------------------------------------
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1732,76 +1034,50 @@
     document.getElementById('nav-links').classList.toggle('open');
   }
 
-  // Cierra el menu automaticamente al hacer clic en cualquier enlace
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       document.getElementById('nav-links').classList.remove('open');
     });
   });
 
-  // -------------------------------------------------------
-  // LIGHTBOX - ZOOM DE IMAGENES
-  // Al hacer clic en una imagen real de la bitacora se abre
-  // el lightbox con la imagen ampliada.
-  // Al hacer clic fuera de la imagen o en la X se cierra.
-  // -------------------------------------------------------
   function openLightbox(src, alt) {
     const overlay = document.getElementById('lightbox');
     const img     = document.getElementById('lightbox-img');
     img.src = src;
     img.alt = alt || 'Imagen ampliada';
     overlay.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Evita scroll de fondo mientras el lightbox esta abierto
+    document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox(event) {
-    // Si se hace clic en la imagen misma, no cierra
     if (event && event.target.classList.contains('lightbox-img')) return;
     document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = ''; // Restaura el scroll
+    document.body.style.overflow = '';
   }
 
-  // Cierra el lightbox con la tecla Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
   });
 
-  // Agrega el evento de clic a todas las imagenes reales de la bitacora
-  // Busca imagenes dentro de .log-img-slot que ya tengan src real (no vacias)
   function initLightbox() {
-    document.querySelectorAll('.log-img-slot img').forEach(img => {
+    document.querySelectorAll('.log-img-slot img, .result-card-single img').forEach(img => {
       img.addEventListener('click', () => openLightbox(img.src, img.alt));
     });
   }
 
-  // Ejecuta initLightbox al cargar la pagina
   document.addEventListener('DOMContentLoaded', initLightbox);
 
-  // -------------------------------------------------------
-  // ANIMACIONES DE ENTRADA AL HACER SCROLL (fade-in)
-  // IntersectionObserver detecta cuando un elemento .fade-in
-  // entra en el viewport y le agrega la clase .visible,
-  // activando la transicion CSS de opacidad y posicion.
-  // -------------------------------------------------------
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible'); // Activa la animacion CSS
-      }
+      if (e.isIntersecting) e.target.classList.add('visible');
     });
-  }, { threshold: 0.12 }); // Se activa cuando el 12% del elemento es visible
+  }, { threshold: 0.12 });
 
-  // Agrega un retraso escalonado entre elementos consecutivos para efecto de cascada
   document.querySelectorAll('.fade-in').forEach((el, i) => {
     el.style.transitionDelay = (i % 4) * 0.08 + 's';
     observer.observe(el);
   });
 
-  // -------------------------------------------------------
-  // EFECTO DE COMPRESION DEL NAVBAR AL HACER SCROLL
-  // Cuando el usuario baja mas de 60px, el padding del nav
-  // se reduce para ocupar menos espacio vertical en pantalla.
-  // -------------------------------------------------------
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('main-nav');
     nav.style.padding = window.scrollY > 60 ? '0.6rem 3rem' : '1rem 3rem';
